@@ -1,21 +1,40 @@
 import java.util.*;
-import java.secuirty.Random;
+import java.util.Random;
+import java.util.List;
 
 
 public class Delivery
 {
-    static Object Book = new Book();
-    static int ticks = 10;
-    static List <Book> BookList = new ArrayList<Book>();
-    
+    private final DeliveryBox deliveryBox;
+    private final List<Section> sections;
+    private final Random random; 
 
-    public static List<Book> Delivery2()
+    public Delivery(DeliveryBox DeliveryBox, List<Section> sections)
     {
-        for(int i = 0; i < ticks; i++)
-        {
-            book.setCategory();
-            BookList.add(book);
-        }
+        this.DeliveryBox = DeliveryBox;
+        this.sections = sections;
+        this.random = new Random();
     }
 
+    public void run()
+    {
+        while(true)
+        {
+            for(Section section : sections)
+            {
+                int numBooks = random.nextInt(10) + 1;
+                List<Books> books = section.getBooks(numBooks);
+                deliveryBox.putBooks(section.getName(), books);
+            }
+
+            int sleeptime = random.nextInt(5) +1;
+            try{
+                Thread.sleep(sleeptime * 1000);
+            }
+            catch(InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 }

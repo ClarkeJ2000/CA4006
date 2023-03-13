@@ -25,15 +25,17 @@ public class Book
         categories.add("Fiction");
 
         Random random = new Random();
-        int i = random.nextInt(categories.size());
+        int x = categories.size();
+        int i = random.nextInt(x);
 
         String BookCategory = categories.get(i);
         return BookCategory;
     }
-}
 
-public static void main(String[] args)
-{
-    Books book = new Books();
-    book.setCategory();
+
+    public static void main(String[] args)
+    {
+        Book book = new Book();
+        book.setCategory();
+    }
 }

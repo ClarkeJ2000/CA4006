@@ -1,24 +1,41 @@
-// import java.util.HashMap;
+import java.util.*;
 
-// public class Shelf extends Thread{
+public class Shelf
+{
+    private HashMap<String, Integer> BookSection = new HashMap<String, Integer>();
+    private Delivery delivery;
+    
 
-//     private static final int SECTIONS_COUNT = 6;
+    public Shelf(Delivery delivery)
+    {
+        this.delivery = delivery;
+    }
 
-//     // sections contains a list of book count in bookstore Fiction, Horror, Romance, Fantasy, Poetry, History
-//     public int fiction;
-//     public int horror;
-//     public int romance;
-//     public int fantasy;
-//     public int poetry;
-//     public int history;
-//     private static final String bookCategories[] = {"Fiction", "Horror", "Romance", "Fantasy", "Poetry", "History"};
+    public Delivery getDelivery()
+    {
+            return this.delivery;
+    }
 
-//     public Shelf(){        
-//     }
+    public void addBook(String section)
+    {
+        int current = BookSection.getOrDefault(section, 0);
+        BookSection.put(section, current + 1);
+    }
 
+    public boolean getBook(String section)
+    {
+        int current = BookSection.getOrDefault(section, 0);
+        if (current > 0)
+        {
+            BookSection.put(section, current - 1);
+            return true;            
+        }
+        return false;
+    }
 
-
-
-
-
-// }
+    public static Queue<String> CustomerLine(Queue<String> CustomerLine, String Customer)
+    {
+        CustomerLine.add(Customer);
+        return CustomerLine;
+    }
+}

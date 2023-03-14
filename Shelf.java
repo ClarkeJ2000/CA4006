@@ -4,6 +4,7 @@ public class Shelf
 {
     private HashMap<String, Integer> BookSection = new HashMap<String, Integer>();
     private Delivery delivery;
+    private HashMap<String, Integer> Bookcount;
     
 
     public Shelf(Delivery delivery)
@@ -31,6 +32,14 @@ public class Shelf
             return true;            
         }
         return false;
+    }
+
+    public String[] getSection()
+    {
+        Set<String> sections = Bookcount.keySet();
+        String result = new String[sections.size()];
+        sections.toArray(result);
+        return result;
     }
 
     public static Queue<String> CustomerLine(Queue<String> CustomerLine, String Customer)

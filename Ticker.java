@@ -1,4 +1,4 @@
-public class Ticker extends Thread {
+public class Ticker extends Thread{
 
     private static final int TICKS_PER_DAY = 1000;
     // Change the tick interval here
@@ -9,6 +9,7 @@ public class Ticker extends Thread {
 
     public Ticker(Delivery Currdelivery){
         this.delivery = Currdelivery;
+        System.out.println("Staring Ticker.....");
     }
 
 
@@ -39,7 +40,7 @@ public class Ticker extends Thread {
             }
             CURRENTTICK++;
             ShareTick();
-            //System.out.println("Tick " + CURRENTTICK);
+            System.out.println("Tick " + CURRENTTICK + " Thread " + Thread.currentThread().getId());
         }
         
     }

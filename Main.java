@@ -14,11 +14,24 @@ public class Main extends Thread{
     {
         Shelf shelf = new Shelf();
         Assistant assistant = new Assistant(shelf);
-        Delivery delivery = new Delivery(assistant);
-        Ticker ticker = new Ticker(delivery);
+        Assistant assistant1 = new Assistant(shelf);
+        //Customer customer = new Customer(shelf);
+        Delivery delivery = new Delivery(assistant, assistant1);
+        Ticker ticker = new Ticker(delivery, assistant, assistant1, shelf);
+
+
+        Thread t1 = new Thread(ticker);
+        Thread t2 = new Thread(delivery);
+        Thread t3 = new Thread(assistant);
+        Thread t4 = new Thread(assistant1);
+        Thread t5 = new Thread(shelf);
+
         
-        delivery.run();
-        ticker.run();
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+        t5.start();
         
     }
 

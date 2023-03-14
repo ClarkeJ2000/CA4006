@@ -6,10 +6,16 @@ public class Ticker extends Thread{
     public int CURRENTTICK = 0;
 
     private Delivery delivery;
+    private Assistant assistant;
+    private Assistant assistant1;
+    private Shelf shelf;
 
-    public Ticker(Delivery Currdelivery){
+    public Ticker(Delivery Currdelivery, Assistant currAssistant, Assistant curAssistant1, Shelf currShelf){
         this.delivery = Currdelivery;
-        System.out.println("Staring Ticker.....");
+        this.assistant = currAssistant;
+        this.assistant1 = curAssistant1;
+        this.shelf = currShelf;
+
     }
 
 
@@ -25,6 +31,9 @@ public class Ticker extends Thread{
 
     private void ShareTick(){
         this.delivery.SetTicker(CURRENTTICK);
+        this.assistant.SetTicker(CURRENTTICK);
+        this.assistant1.SetTicker(CURRENTTICK);
+        this.shelf.SetTicker(CURRENTTICK);
 
     }
 
@@ -40,7 +49,7 @@ public class Ticker extends Thread{
             }
             CURRENTTICK++;
             ShareTick();
-            System.out.println("Tick " + CURRENTTICK + " Thread " + Thread.currentThread().getId());
+            System.out.println("<Tick " + CURRENTTICK + "> " +  "<T" + Thread.currentThread().getId() + ">");
         }
         
     }

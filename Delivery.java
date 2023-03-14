@@ -11,16 +11,20 @@ public class Delivery extends Thread{
     //private Ticker ticker = new Ticker();
     private int CurrTime = 1;
     private Assistant assistant;
+    private Assistant assistant1;
 
-    public Delivery(Assistant assistant1){
+    public Delivery(Assistant assistant1, Assistant assistant2){
         this.assistant = assistant1;
-        System.out.println("Starting Delivery.....");
+        this.assistant1 = assistant2;
+
 
     }
 
     public void SetTicker(int time){
         CurrTime = time;
-        if(CurrTime % 100 == 0){
+        Random rand = new Random();
+        int n = rand.nextInt(101);
+        if(n == 25){
             acceptDelivery();
             // DeliveryAvailable = value.set(1);
         }
@@ -28,8 +32,8 @@ public class Delivery extends Thread{
 
 
     public void ShareDelivery(){
-        this.assistant.TrueDeliveryStatus(true);
-        this.assistant.StockShelves(Sections);
+        //this.assistant.TrueDeliveryStatus(true);
+        this.assistant.TrueDeliveryStatus(true, Sections);
     }
     // public void DeliveryCollected(){
     //     DeliveryAvailable = false;
@@ -38,31 +42,35 @@ public class Delivery extends Thread{
 
     public void acceptDelivery(){
         Sections.clear();
+        int TotalValue = 0;
         // add books to shelf
-        Random random = new Random();
+        
         // assign to 11 to include 10
         int booksLeft = 11; 
         // loop until all books are delivered
-        while (booksLeft > 1){
+        while (TotalValue < 10){
             // get random number of books to deliver
+            Random random = new Random();
             int bookAmount = random.nextInt(booksLeft);
             if(bookAmount != 0){
                 // get random section to deliver to
                 int sectionName = random.nextInt(SECTIONS_COUNT);
                 String Name = bookCategories[sectionName];
                 if(Sections.containsKey(Name)){
-                    Sections.put(Name, bookAmount + 1);
+                    Sections.put(Name, bookAmount);
+                    TotalValue += bookAmount;
                 }
                 else{
                     Sections.put(Name, bookAmount);
+                    TotalValue += bookAmount;
                     }
                 }
-                //System.out.println(bookAmount + " books were delivered to " + bookCategories[sectionName] + " section");
+
                 booksLeft -= bookAmount;
             }
 
         ShareDelivery();
-        System.out.println("Delivery complete");   
+        System.out.println("<Tick " + CurrTime + "> T<" + Thread.currentThread().getId() + "> Deposited a box of books");   
     }
 
 

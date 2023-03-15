@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.random.*;
 
-public class Customer implements Runnable
+public class Customer extends Thread
 {
     private String section;
     private  Random random;

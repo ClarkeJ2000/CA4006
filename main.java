@@ -1,4 +1,4 @@
-public class Main extends Thread{
+public class main extends Thread{
 
     // constants for simulation params
     private static final int TICKS_PER_DAY = 1000;

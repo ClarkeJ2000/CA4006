@@ -24,7 +24,7 @@ public class Customer extends Thread
     {
         while(true)
         {
-            String [] sections = shelf.getSection();
+            String [] sections = shelf.getRandomSection();
             section = sections[random.nextInt(sections.length)];
 
             if(shelf.getBook(section))

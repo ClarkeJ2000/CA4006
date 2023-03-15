@@ -1,10 +1,11 @@
 import java.util.*;
 
-public class Shelf
+public class Shelf extends Thread
 {
     private HashMap<String, Integer> BookSection = new HashMap<String, Integer>();
     private Delivery delivery;
     private HashMap<String, Integer> Bookcount;
+    private HashMap<String, Integer> sections;
     
 
     public Shelf(Delivery delivery)
@@ -34,12 +35,13 @@ public class Shelf
         return false;
     }
 
-    public String[] getSection()
+    public String[] getRandomSection()
     {
-        Set<String> sections = Bookcount.keySet();
-        String result = new String[sections.size()];
-        sections.toArray(result);
-        return result;
+        Set<String> sectionKey = sections.keySet();
+        String[] result = sectionKey.toArray(new String[sectionKey.size()]);
+        Random random = new Random();
+        int index = random.nextInt(result.length);
+        return new String[] {result[index]};
     }
 
     public static Queue<String> CustomerLine(Queue<String> CustomerLine, String Customer)

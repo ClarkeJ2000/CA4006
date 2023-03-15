@@ -9,7 +9,6 @@ public class Main extends Thread{
    
     public int CURRENTTICK = 0;
 
-
     public static void main(String [] args)
     {
         Shelf shelf = new Shelf();

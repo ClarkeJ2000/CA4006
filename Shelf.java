@@ -1,9 +1,11 @@
 
 import java.util.*;
 
-public class Shelf extends Thread
+public class Shelf implements Runnable
 {
     private HashMap<String, Integer> BookSection = new HashMap<String, Integer>();
+    private HashMap<String, Integer> Bookcount;
+    private HashMap<String, Integer> sections;
     private Delivery delivery;
     private int CurrTime = 0;
     
@@ -40,17 +42,22 @@ public class Shelf extends Thread
         return false;
     }
 
-    // public String[] getSection()
-    // {
-    //     Set<String> sections = Bookcount.keySet();
-    //     String result = new String[sections.size()];
-    //     sections.toArray(result);
-    //     return result;
-    // }
+    public String[] getRandomSection()
+    {
+        Set<String> sectionKey = sections.keySet();
+        String[] result = sectionKey.toArray(new String[sectionKey.size()]);
+        Random random = new Random();
+        int index = random.nextInt(result.length);
+        return new String[] {result[index]};
+    }
 
     public static Queue<String> CustomerLine(Queue<String> CustomerLine, String Customer)
     {
         CustomerLine.add(Customer);
         return CustomerLine;
+    }
+
+    public void run(){
+        
     }
 }

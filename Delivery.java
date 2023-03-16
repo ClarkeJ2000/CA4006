@@ -4,14 +4,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.Attributes.Name;
 
 
-public class Delivery extends Thread{
+public class Delivery implements Runnable{
+    // change the amount of sections here
     private static final int SECTIONS_COUNT = 6;
     private static final HashMap<String, Integer> Sections = new HashMap<String, Integer>();
+    // You can add in more sections here
     private static final String bookCategories[] = {"Fiction", "Horror", "Romance", "Fantasy", "Poetry", "History"};
     //private Ticker ticker = new Ticker();
     private int CurrTime = 1;
     private Assistant assistant;
     private Assistant assistant1;
+    // Set this to change the amount of books per delivery
+    private int BOOKS_PER_DELIVERY = 10;
+    // Set this to change the delivery probability
+    private int DELIVERY_INTERVAL = 100;
 
     public Delivery(Assistant assistant1, Assistant assistant2){
         this.assistant = assistant1;
@@ -23,22 +29,18 @@ public class Delivery extends Thread{
     public void SetTicker(int time){
         CurrTime = time;
         Random rand = new Random();
-        int n = rand.nextInt(101);
-        if(n == 25){
+        // get random number for delivery probability
+        int n = rand.nextInt(DELIVERY_INTERVAL + 1);
+        if(n == 1){
             acceptDelivery();
-            // DeliveryAvailable = value.set(1);
         }
     }
 
 
+    // sets the delivery status to true for the assistant
     public void ShareDelivery(){
-        //this.assistant.TrueDeliveryStatus(true);
         this.assistant.TrueDeliveryStatus(true, Sections);
     }
-    // public void DeliveryCollected(){
-    //     DeliveryAvailable = false;
-    // }
-
 
     public void acceptDelivery(){
         Sections.clear();
@@ -46,7 +48,7 @@ public class Delivery extends Thread{
         // add books to shelf
         
         // assign to 11 to include 10
-        int booksLeft = 11; 
+        int booksLeft = BOOKS_PER_DELIVERY + 1; 
         // loop until all books are delivered
         while (TotalValue < 10){
             // get random number of books to deliver

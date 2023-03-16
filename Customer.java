@@ -7,11 +7,23 @@ public class Customer extends Thread
     private  Random random;
     private int customerTicker = 10;
     private Shelf shelf;
-
-    public Customer(Shelf shelf)
+    private int sleeptime;
+    
+    public Customer(Shelf shelf, int sleeptime)
     {
         this.random = new Random();
         this.shelf = shelf;
+        this.sleeptime = sleeptime;
+    }
+
+    public class waitforbook
+    {
+        private String SectionName;
+        
+        public waitforbook(String SectionName)
+        {
+            this.SectionName = SectionName;
+        }
     }
 
 
@@ -20,12 +32,30 @@ public class Customer extends Thread
         return customerTicker;
     }
 
+   
+
     public void run()
     {
+
+        String [] sections = shelf.getRandomSection();
+        String SectionName = sections[0];
+        section = sections[random.nextInt(sections.length)];
         while(true)
         {
-            String [] sections = shelf.getRandomSection();
-            section = sections[random.nextInt(sections.length)];
+            while(GetnumberOfBooks(SectionName) == 0)
+            {
+                try{
+                    System.out.println("Waiting for a book");
+                    Thread.sleep(sleeptime);
+                }
+                catch (InterruptedException e)
+                {
+                    System.out.println("Still waiting for book");
+                }
+
+            }
+            
+
 
             if(shelf.getBook(section))
             {
@@ -40,3 +70,4 @@ public class Customer extends Thread
         }
     }
 }
+

@@ -1,7 +1,8 @@
-public class Ticker extends Thread{
+public class Ticker implements Runnable{
 
+    // Change the ticks per day here
     private static final int TICKS_PER_DAY = 1000;
-    // Change the tick interval here
+    // Change the tick interval here (100 = 0.1 seconds, 1000 = 1 second etc)
     private static final int DELIVERY_TICK_INTERVAL = 100;
     public int CURRENTTICK = 0;
 
@@ -9,12 +10,14 @@ public class Ticker extends Thread{
     private Assistant assistant;
     private Assistant assistant1;
     private Shelf shelf;
+    private Customer customer;
 
-    public Ticker(Delivery Currdelivery, Assistant currAssistant, Assistant curAssistant1, Shelf currShelf){
+    public Ticker(Delivery Currdelivery, Assistant currAssistant, Assistant curAssistant1, Shelf currShelf, Customer currCustomer){
         this.delivery = Currdelivery;
         this.assistant = currAssistant;
         this.assistant1 = curAssistant1;
         this.shelf = currShelf;
+        this.customer = currCustomer;
 
     }
 
@@ -29,11 +32,13 @@ public class Ticker extends Thread{
         }
     }
 
+    // Share the current tick to all classes
     private void ShareTick(){
         this.delivery.SetTicker(CURRENTTICK);
         this.assistant.SetTicker(CURRENTTICK);
         this.assistant1.SetTicker(CURRENTTICK);
         this.shelf.SetTicker(CURRENTTICK);
+        this.customer.SetTicker(CURRENTTICK);
 
     }
 
@@ -42,6 +47,7 @@ public class Ticker extends Thread{
         for (int i = 0; i < TICKS_PER_DAY; i++) {
             try {
 
+                // sleep for the tick interval
                 Thread.sleep(DELIVERY_TICK_INTERVAL);
                 
             } catch (InterruptedException e) {

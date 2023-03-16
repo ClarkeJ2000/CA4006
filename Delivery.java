@@ -1,8 +1,5 @@
 import java.util.*;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.jar.Attributes.Name;
-
 
 public class Delivery implements Runnable{
     // change the amount of sections here
@@ -31,7 +28,8 @@ public class Delivery implements Runnable{
         Random rand = new Random();
         // get random number for delivery probability
         int n = rand.nextInt(DELIVERY_INTERVAL + 1);
-        if(n == 1){
+        // if the random number is 25, deliver books
+        if(n == 25){
             acceptDelivery();
         }
     }
@@ -42,8 +40,9 @@ public class Delivery implements Runnable{
         this.assistant.TrueDeliveryStatus(true, Sections);
     }
 
+
     public void acceptDelivery(){
-        Sections.clear();
+        //Sections.clear();
         int TotalValue = 0;
         // add books to shelf
         
@@ -56,8 +55,8 @@ public class Delivery implements Runnable{
             int bookAmount = random.nextInt(booksLeft);
             if(bookAmount != 0){
                 // get random section to deliver to
-                int sectionName = random.nextInt(SECTIONS_COUNT);
-                String Name = bookCategories[sectionName];
+                int sectionName = random.nextInt((SECTIONS_COUNT + 1) - 1);
+                String Name = bookCategories[sectionName];               
                 if(Sections.containsKey(Name)){
                     Sections.put(Name, bookAmount);
                     TotalValue += bookAmount;
@@ -72,7 +71,8 @@ public class Delivery implements Runnable{
             }
 
         ShareDelivery();
-        System.out.println("<Tick " + CurrTime + "> T<" + Thread.currentThread().getId() + "> Deposited a box of books");   
+        System.out.println("<Tick " + CurrTime + "> T<" + Thread.currentThread().getId() + "> Deposited a box of books");
+        Sections.clear();   
     }
 
 

@@ -4,11 +4,10 @@ import java.util.Random;
 
 public class Customer implements Runnable
 {
-    private String section;
-    private  Random random;
-    private int customerTicker = 10;
     private Shelf shelf;
     private int CurrTime = 0;
+    private static final int TickInterval = 100;
+    private static final String bookCategories[] = {"Fiction", "Horror", "Romance", "Fantasy", "Poetry", "History"};
 
     public Customer(Shelf shelf)
     {
@@ -21,39 +20,37 @@ public class Customer implements Runnable
     {
         CurrTime = Tick;
     }
-
-    // public void TakeBook(){
-    //     String[] book = shelf.getRandomSection();
-    //     System.out.println(book);
-    //     //shelf.getBook(book);
-
-
-    // }
-
-    public void run()
-    {
-        while(true)
-        {
-            String tst[] = shelf.getRandomSection();
-            System.out.println(tst);
-            // if(shel)
-            // {
-            //     String [] sections = shelf.getRandomSection();
-            //     section = sections[random.nextInt(sections.length)];
-
-            //     System.out.println("Customer took book from " + section);
-            //     try{
-            //         Thread.sleep(100);
-            //     }
-            //     catch(InterruptedException e){
-            //         e.printStackTrace();
-            //     }
-            // }
-            // else
-            // {
-            //     System.out.println("Customer waiting for book in " + section);
-            //     //shelf.isEmpty(section);
-            // }
+    
+    public synchronized void run(){
+        while(true){
+            // get random section to get book from
+            Random random = new Random();
+            // get random section
+            int sectionName = random.nextInt((bookCategories.length + 1) - 1);
+            // If book is in section, remove it
+            if(shelf.getBook(bookCategories[sectionName])){
+                String CustomerBook = bookCategories[sectionName];
+                try{
+                    shelf.RemoveBook(CustomerBook);
+                    System.out.println("<Tick " + CurrTime + "> <T" + Thread.currentThread().getId() + "> Customer removed book from section " + bookCategories[sectionName]);
+                    // sleep for 10 ticks
+                    Thread.sleep(10 * TickInterval);
+                }
+                catch (InterruptedException e)
+                {
+                    System.out.println("Still waiting for book");
+                }
+            }
+            else{
+                try{
+                    // sleep for 2 ticks as a waiting system
+                    Thread.sleep(2 * TickInterval);
+            }
+            catch (InterruptedException e)
+            {
+                System.out.println("Still waiting for book");
+            }
         }
     }
+}
 }

@@ -1,12 +1,5 @@
 public class Main implements Runnable{
 
-    // constants for simulation params
-    private static final int TICKS_PER_DAY = 1000;
-    private static final int DELIVERY_TICK_INTERVAL = 100;
-    private static final int BOOKS_PER_DELIVERY = 10;
-    private static final int SECTIONS_COUNT = 6;
-    private static final int CUSTOMER_TICK_INTERVAL = 10;
-   
     public int CURRENTTICK = 0;
 
 

@@ -37,12 +37,11 @@ public class Customer extends Thread
     public void run()
     {
 
-        String [] sections = shelf.getRandomSection();
-        String SectionName = sections[0];
-        section = sections[random.nextInt(sections.length)];
+        String[] sections = shelf.getRandomSection();
+        //String SectionName = sections[0];
+        //section = sections[random.nextInt(sections.length)];
         while(true)
-        {
-            while(GetnumberOfBooks(SectionName) == 0)
+                    while(shelf.getNumBooks(section) == 0)
             {
                 try{
                     System.out.println("Waiting for a book");
@@ -69,5 +68,5 @@ public class Customer extends Thread
             }
         }
     }
-}
+
 

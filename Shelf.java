@@ -28,7 +28,7 @@ public class Shelf extends Thread
     public boolean getBook(String section)
     {
         int current = BookSection.getOrDefault(section, 0);
-        if (current > 0)
+        if (current > 1)
         {
             BookSection.put(section, current - 1);
             return true;            
@@ -36,13 +36,18 @@ public class Shelf extends Thread
         return false;
     }
 
-    public String[] getRandomSection()
+    public String getRandomSection()
     {
-        Set<String> sectionKey = sections.keySet();
-        String[] result = sectionKey.toArray(new String[sectionKey.size()]);
+
+        //convert to array to get random element
+        String[] SectionName = sections.keySet().toArray(new String[0]);
+        
+        //generate a random index
         Random random = new Random();
-        int index = random.nextInt(result.length);
-        return new String[] {result[index]};
+        int index = random.nextInt(SectionName.length);
+
+        //return a random section name
+        return SectionName[index];
     }
 
     public static Queue<String> CustomerLine(Queue<String> CustomerLine, String Customer)

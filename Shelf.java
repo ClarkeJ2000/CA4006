@@ -6,6 +6,7 @@ public class Shelf extends Thread
     private Delivery delivery;
     private HashMap<String, Integer> Bookcount;
     private HashMap<String, Integer> sections;
+    private List<Book> books;
     
 
     public Shelf(Delivery delivery)
